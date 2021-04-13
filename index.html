@@ -234,8 +234,13 @@
 
     compile(){
       let functions = this.parseText(this.code.value);
-      let buffer = this.compileFunctions(functions);
-      this.download(buffer);
+      console.log(functions);
+      try{
+        let buffer = this.compileFunctions(functions);
+        this.download(buffer);
+      }catch(e){
+        alert("An error occured please check the code")
+      }
     }
 
     download(buffer){
