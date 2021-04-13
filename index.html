@@ -17,7 +17,7 @@
     width: calc(100% - 60px);
     height: calc(100% - 100px);
     color: white;
-    background: #222;
+    background: #1c1c1c;
     border: none;
     outline: none;
     padding: 10px;
@@ -111,7 +111,6 @@
   class UploadFilesIcon extends Icon{
     constructor(){
       super(`
-
         <svg viewBox="0 0 100 88.3">
         <style>
         .dark{opacity:0.5;fill:#4FAE32;}
@@ -219,6 +218,12 @@
           value1: this.toVal(match[5]),
           type2: this.optypes[match[7]],
           value2: this.toVal(match[8])
+        }
+        if (!match[4]){
+          code.type1 = code.type2;
+          code.value1 = code.value2;
+          code.type2 = null;
+          code.value2 = null;
         }
         return code;
       }catch(e){
