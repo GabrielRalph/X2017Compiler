@@ -1,0 +1,333 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>x2017 compiler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+<body>
+
+</body>
+<style>
+  .code{
+    position: fixed;
+    top: 70px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    width: calc(100% - 60px);
+    height: calc(100% - 100px);
+    color: white;
+    background: #222;
+    border: none;
+    outline: none;
+    padding: 10px;
+  }
+  .code:focus, .code:active{
+    background: #191919;
+  }
+  .icon{
+    height: 40px;
+    position: fixed;
+    top: 15px;
+  }
+  .upload{
+    right: 30px;
+  }
+  .compile{
+    fill: white;
+    left: 30px;
+  }
+
+  body{
+    background: #222;
+  }
+
+</style>
+<script type = "module">
+  import {SvgPlus} from 'https://www.svg.plus/3.5.js'
+  class Icon extends SvgPlus{
+    constructor(html){
+      super('svg');
+      this.props = {
+        viewBox: '0 0 100 100',
+        height: '1em',
+        cursor: 'pointer'
+      }
+      let el = SvgPlus.parseSVGString(html)
+      this.props = {viewBox: el.getAttribute('viewBox')}
+      this.innerHTML = el.innerHTML;
+      this.class = "icon"
+    }
+
+    set color(color){
+      this.props = {
+        fill: color
+      }
+    }
+
+    set float(val){
+      this.styles = {float: val}
+    }
+
+    set hidden(val){
+      if (val){
+        this.props = {visibility: 'hidden'};
+        this._hidden = true;
+      }else{
+        this.props = {visibility: 'visible'}
+        this._hidden = false;
+      }
+    }
+
+    get hidden(){
+      return this._hidden;
+    }
+  }
+
+  class Arrow extends Icon{
+    constructor(){
+      super(`
+        <svg viewBox="0 0 41.13 29.69">
+        	<path d="M5.22,20.47l3.58,9.05h-1.7l-0.78-1.98H2.44l-0.78,1.98H0l3.58-9.05H5.22z M4.38,22.53H4.36L2.99,26.1h2.76L4.38,22.53z"/>
+        	<path d="M12.11,29.69c-0.39,0-0.76-0.06-1.1-0.17c-0.34-0.12-0.65-0.28-0.93-0.48c-0.28-0.2-0.51-0.45-0.69-0.73
+        		C9.2,28.02,9.07,27.71,9,27.39l1.62-0.29c0.08,0.3,0.26,0.55,0.53,0.75c0.27,0.2,0.59,0.29,0.96,0.29c0.42,0,0.75-0.13,1.01-0.38
+        		c0.26-0.25,0.39-0.56,0.39-0.93c0-0.22-0.07-0.45-0.22-0.67c-0.14-0.22-0.4-0.4-0.76-0.54l-1.25-0.46
+        		c-0.66-0.25-1.13-0.59-1.43-1.02c-0.3-0.43-0.44-0.9-0.44-1.4c0-0.34,0.07-0.66,0.2-0.96c0.13-0.3,0.32-0.55,0.55-0.77
+        		c0.24-0.22,0.52-0.39,0.84-0.52s0.67-0.19,1.05-0.19c0.56,0,1.05,0.13,1.48,0.4c0.43,0.27,0.74,0.62,0.94,1.05l-1.48,0.73
+        		c-0.06-0.18-0.18-0.34-0.35-0.46c-0.17-0.12-0.37-0.18-0.6-0.18c-0.28,0-0.51,0.08-0.7,0.25c-0.18,0.17-0.28,0.38-0.28,0.64
+        		c0,0.14,0.04,0.29,0.13,0.45c0.09,0.16,0.27,0.3,0.55,0.41l1.27,0.47c0.37,0.14,0.69,0.3,0.95,0.5c0.27,0.2,0.49,0.41,0.67,0.65
+        		c0.18,0.24,0.31,0.5,0.39,0.77s0.13,0.55,0.13,0.83c0,0.4-0.08,0.77-0.23,1.12c-0.15,0.34-0.37,0.65-0.64,0.91
+        		c-0.28,0.26-0.6,0.46-0.98,0.61S12.55,29.69,12.11,29.69z"/>
+        	<path d="M23.81,23.52l-2.28,6h-0.77l-2.28-6l-0.9,6h-1.56l1.4-9.05h1.55l2.2,5.8l2.2-5.8h1.55l1.4,9.05h-1.61L23.81,23.52z"/>
+        	<path d="M38.04,3.1c-2-2-4.65-3.1-7.47-3.1c-2.82,0-5.48,1.1-7.47,3.1c-1.65,1.65-2.67,3.75-2.98,6.02l-4.32-1.56
+        		c2.29,2.62,4.44,6.85,5.71,10.26c1.26-3.41,3.42-7.64,5.71-10.26l-4.05,1.46c0.3-1.43,1-2.74,2.06-3.8C26.64,3.79,28.54,3,30.57,3
+        		c2.02,0,3.92,0.79,5.35,2.22c2.95,2.95,2.95,7.75,0,10.71c-1.28,1.28-2.99,2.06-4.79,2.2c-0.83,0.06-1.45,0.78-1.39,1.61
+        		c0.06,0.79,0.72,1.39,1.49,1.39c0.04,0,0.07,0,0.11,0c2.53-0.19,4.9-1.27,6.7-3.07C42.16,13.92,42.16,7.22,38.04,3.1z"/>
+        </svg>
+        `);
+        this.class = "arrow";
+      }
+    }
+  class UploadFilesIcon extends Icon{
+    constructor(){
+      super(`
+
+        <svg viewBox="0 0 100 88.3">
+        <style>
+        .dark{opacity:0.5;fill:#4FAE32;}
+        .light{opacity:0.3;fill:#4FAE32;}
+        .arrow{opacity:0.97;fill:#FDFFFD;}
+        </style>
+        <g>
+        <path class="dark" d="M94.53,15.99H58.45l0.1-0.04l-9.95-4.1L5.48,11.78C2.46,11.77,0,13.54,0,15.72v0.27v4.13v61.1c0,3.02,2.45,5.47,5.47,5.47h9v1.52h11.62V86.7h48.15v1.52h11.29V86.7h9c3.02,0,5.47-2.45,5.47-5.47V21.46C100,18.44,97.55,15.99,94.53,15.99z"/>
+        <path class="light" d="M48.6,20.2L0,20.12v-4.4c0-2.18,2.46-3.95,5.48-3.94l43.12,0.07l9.95,4.1L48.6,20.2z"/>
+        <polygon class="dark" points="14.47,41.05 14.47,88.22 26.09,88.22 26.09,51.18 74.24,51.18 74.24,88.22 85.53,88.22 85.53,41.05"/>
+        </g>
+        <polygon class="arrow" points="50,26.43 31.59,46.12 41.44,46.12 41.44,73.57 58.56,73.57 58.56,46.12 68.41,46.12 "/>
+        </svg>
+        `);
+      }
+    }
+
+  class X2017Compiler extends SvgPlus{
+    constructor(){
+      super('div');
+
+      this.uploadButton = this.createChild(UploadFilesIcon);
+      this.uploadButton.onclick = () => {this.upload()};
+      this.uploadButton.class = "icon upload"
+
+
+      this.compileButton = this.createChild(Arrow);
+      this.compileButton.class = "icon compile"
+      this.compileButton.onclick = () => {this.compile()}
+
+      this.code = this.createChild('textarea');
+      this.code.class = "code"
+      this.code.props = {
+        placeholder: "Enter code here or upload from file"
+      }
+
+      this.opcodes = {
+        MOV: 0,
+        CAL: 1,
+        RET: 2,
+        REF: 3,
+        ADD: 4,
+        PRINT: 5,
+        NOT: 6,
+        EQU: 7
+      }
+      this.opcodeparams = [2, 1, 0, 2, 2, 1, 1, 1];
+      this.typelength = [8, 3, 5, 5];
+      this.optypes = {
+        VAL: 0,
+        REG: 1,
+        STK: 2,
+        PTR: 3
+      }
+    }
+
+    upload(){
+      let input = new SvgPlus('input');
+      input.props = {type: 'file'};
+      input.oninput = () => {
+        var reader = new FileReader();
+        reader.onload = () => {
+          var text = reader.result;
+          this.code.value = text;
+          this.compile();
+        };
+        let file = input.files[0];
+        if (file){
+          this.filename = file.name.split('.')[0];
+          reader.readAsText(file);
+        }
+      }
+      input.click();
+    }
+
+    checkFunctionLabel(line){
+      if (!line) return null;
+      const match = line.match(/^FUNC LABEL (\d)/);
+      if (!match) return null;
+      if (match[1]) return parseInt(match[1]);
+      return null;
+    }
+
+    toVal(val){
+      if (!val) return 0;
+      let num = parseInt(val);
+      if (Number.isNaN(num)) {
+        if (val >= 'A' && val <= 'Z') {
+          num = val.charCodeAt(0) - 'A'.charCodeAt(0);
+        }else if(val >= 'a' && val <= 'z'){
+          num = val.charCodeAt(0) - 'a'.charCodeAt(0) + 27;
+        }
+      }
+      return num;
+    }
+
+    checkOpcode(line){
+      if (!line) return null;
+      const match = line.match(/^\s+(MOV|CAL|REF|RET|ADD|NOT|EQU|PRINT)((\s+(STK|REG|VAL|PTR)\s+(\d+|[A-Za-z])){0,1}(\s+(STK|REG|VAL|PTR)\s+(\d+|[A-Za-z]))){0,1}/m);
+      try{
+        let code =  {
+          opcode: this.opcodes[match[1]],
+          name: match[1],
+          type1: this.optypes[match[4]],
+          value1: this.toVal(match[5]),
+          type2: this.optypes[match[7]],
+          value2: this.toVal(match[8])
+        }
+        return code;
+      }catch(e){
+        return null;
+      }
+    }
+
+
+    compile(){
+      let functions = this.parseText(this.code.value);
+      let buffer = this.compileFunctions(functions);
+      this.download(buffer);
+    }
+
+    download(buffer){
+      let n = buffer.length;
+      let array = new Uint8Array(n)
+      for (var i = 0; i < n; i++){
+        array[i] = buffer[i]
+      }
+
+      let blob = new Blob([array], {type: "application/octet-stream"})
+      var url = window.URL.createObjectURL(blob);
+      let a = new SvgPlus('a')
+      let filename = this.filename + '.x2017';
+      a.props = {download: filename, href: url};
+      a.click();
+    }
+
+    compileFunctions(functions, padding = 0){
+      let buffer = [];
+      let bitBuffer = 0;
+      let bbSize = padding;
+      let addBits = (data, n)=>{
+        if (n + bbSize < 8){
+          bitBuffer |= (data<<(8 - n - bbSize));
+          bbSize += n;
+        }else{
+          bitBuffer |= (data>>(n + bbSize - 8));
+          buffer.push(bitBuffer);
+          n += bbSize - 8;
+          data &= 0xFF>>(8 - n);
+          bitBuffer = 0;
+          bbSize = 0;
+          addBits(data, n)
+        }
+      }
+      for (var func of functions){
+        addBits(func.label, 3);
+        for (var opcode of func.code) {
+          let p = this.opcodeparams[opcode.opcode];
+          if (p == 2) {
+            let l = this.typelength[opcode.type2];
+            addBits(opcode.value2, l);
+            addBits(opcode.type2, 2);
+          }
+          if (p >= 1) {
+            let l = this.typelength[opcode.type1];
+            addBits(opcode.value1, l);
+            addBits(opcode.type1, 2);
+          }
+          addBits(opcode.opcode, 3);
+        }
+        addBits(func.length, 5);
+      }
+      if (8 - bbSize == 0 || bbSize == 0){
+        return buffer;
+      }else{
+        return this.compileFunctions(functions, 8 - bbSize);
+      }
+    }
+
+    parseText(text){
+      if (typeof text !== 'string') return;
+
+      let lines = text.split('\n');
+      let functions = [];
+      let func = null;
+      while (lines.length > 0){
+        let line = lines.shift();
+
+        let label = this.checkFunctionLabel(line);
+        let opcode = this.checkOpcode(line);
+
+        if (label !== null) {
+          if (func !== null) {
+            func.length = func.code.length;
+            functions.push(func);
+          }
+          func = {
+            label: this.checkFunctionLabel(line),
+            code: [],
+          }
+        }else if(opcode !== null && func !== null){
+          func.code.push(opcode);
+        }
+      }
+      if (func !== null) {
+        func.length = func.code.length;
+        functions.push(func);
+      }
+      return functions;
+    }
+  }
+
+
+
+
+
+  document.body.appendChild(new X2017Compiler)
+</script>
+</html>
